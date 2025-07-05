@@ -77,6 +77,9 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
+		# Set executable permission for cu binary
+		chmod +x "$install_path/cu"
+
 		# Ensure cu executable exists and is executable
 		test -x "$install_path/cu" || fail "Expected $install_path/cu to be executable."
 
