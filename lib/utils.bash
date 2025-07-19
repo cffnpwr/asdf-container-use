@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/dagger/container-use"
 TOOL_NAME="container-use"
-TOOL_TEST="cu --help"
+TOOL_TEST="container-use --help"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -64,6 +64,10 @@ download_release() {
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
 
+version_lt() {
+	printf '%s\n%s\n' "$1" "$2" | sort -V | head -n1 | grep -q "^$1$"
+}
+
 install_version() {
 	local install_type="$1"
 	local version="$2"
@@ -77,11 +81,21 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-		# Set executable permission for cu binary
-		chmod +x "$install_path/cu"
-
-		# Ensure cu executable exists and is executable
-		test -x "$install_path/cu" || fail "Expected $install_path/cu to be executable."
+		# Determine binary name based on version
+		# v0.1.x uses 'cu', v0.2.0+ uses 'container-use'
+		if version_lt "$version" "0.2.0"; then
+			# v0.1.x: binary is named 'cu'
+			chmod +x "$install_path/cu"
+			# Create container-use symlink for consistency
+			ln -sf "cu" "$install_path/container-use"
+			test -x "$install_path/cu" || fail "Expected $install_path/cu to be executable."
+		else
+			# v0.2.0+: binary is named 'container-use'
+			chmod +x "$install_path/container-use"
+			# Create cu symlink for convenience
+			ln -sf "container-use" "$install_path/cu"
+			test -x "$install_path/container-use" || fail "Expected $install_path/container-use to be executable."
+		fi
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
