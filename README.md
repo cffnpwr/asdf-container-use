@@ -1,31 +1,17 @@
-<div align="center">
+# asdf-container-use
 
-# asdf-container-use [![Build](https://github.com/cffnpwr/asdf-container-use/actions/workflows/build.yml/badge.svg)](https://github.com/cffnpwr/asdf-container-use/actions/workflows/build.yml) [![Lint](https://github.com/cffnpwr/asdf-container-use/actions/workflows/lint.yml/badge.svg)](https://github.com/cffnpwr/asdf-container-use/actions/workflows/lint.yml)
+[asdf](https://github.com/asdf-vm/asdf) plugin for [container-use](https://github.com/dagger/container-use).
 
-[container-use](https://github.com/dagger/container-use) plugin for the [asdf version manager](https://asdf-vm.com).
+## Dependencies
 
-</div>
+- `bash`, `curl`, `tar`: generic POSIX utilities
+- `git`: required for downloading from GitHub
 
-# Contents
-
-- [asdf-container-use  ](#asdf-container-use--)
-- [Contents](#contents)
-- [Dependencies](#dependencies)
-- [Install](#install)
-- [License](#license)
-
-# Dependencies
-
-- `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `git` for version management and repository operations.
-
-# Install
+## Install
 
 Plugin:
 
 ```shell
-asdf plugin add container-use
-# or
 asdf plugin add container-use https://github.com/cffnpwr/asdf-container-use.git
 ```
 
@@ -42,12 +28,26 @@ asdf install container-use latest
 asdf global container-use latest
 
 # Now container-use commands are available
-cu --help
+container-use --help
 ```
 
-Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
-install & manage versions.
+## Binary naming
 
-# License
+- **v0.1.x**: Uses `cu` as the main binary name with `container-use` symlink for compatibility
+- **v0.2.0+**: Uses `container-use` as the main binary name with `cu` symlink for convenience
+
+Both commands are available regardless of version for consistency.
+
+## Usage
+
+Check [asdf](https://github.com/asdf-vm/asdf) readme for instructions on how to install & manage versions.
+
+## Contributing
+
+Contributions of any kind are welcome! See the [contributing guide](../../blob/main/contributing.md).
+
+[Thanks goes to these contributors](../../graphs/contributors)!
+
+## License
 
 See [LICENSE](LICENSE) © [cffnpwr](https://github.com/cffnpwr/)
